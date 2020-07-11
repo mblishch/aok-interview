@@ -6,7 +6,7 @@ import Form from './components/Form';
 function App() {
   return (
     <div className="App">
-      <h1>Certificate</h1>
+      <h1>Certificate Test</h1>
       <Form />
     </div>
   );
