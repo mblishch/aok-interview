@@ -3,6 +3,7 @@ import './Form.css';
 
 import Input from './Input';
 import SubmitButton from './SubmitButton';
+import Loader from './Loader';
 
 import { createCertificateHash, validateAttestation, getAttestationData } from '../api';
 import { FullCertificate, AttestedCertificate } from '@aokpass/aok-sdk';
@@ -24,34 +25,41 @@ function Form() {
   let [formData, setFormValue]  = useState<FormData>(
     createEmptyFormData()
   );
+  const [loading, setLoading] = useState(false);
 
   const onChange = (name: string, value: string) => {
     setFormValue({
       ...formData,
       [name]: value,
     });
-    // console.log('formData', formData);
   }
 
   const onSubmit = async (event: any) => {
+    if (loading) {
+      return false;
+    }
+
     const { firstName, lastName, birthDate } = formData;
-    const fullCertificate: FullCertificate = { 
+    const fullCertificate: FullCertificate = {
       _schema_version: "0.1",
       standard: "id of certificate standard that describes type of certificate",
       publicData: [firstName, lastName, birthDate],
       privateData: ["secret"],
     };
 
+    setLoading(true);
+
     const certificateHash = await createCertificateHash(fullCertificate);
-    
-    const validationResult = await validateAttestation(certificateHash);
+
+    const validationResult = await validateAttestation(fullCertificate, certificateHash);
     if (validationResult.success) {
       const attestationData = await getAttestationData(certificateHash);
       const attestedCertificate: AttestedCertificate = {
         ...attestationData,
         ...fullCertificate,
       };
-      downloadObjectAsJson(attestedCertificate, 'attested_certificate');
+      setLoading(false);
+      downloadObjectAsJson(attestedCertificate, `attested_certificate_${Date.now()}`);
     } else {
       console.log('Not valid.');
     }
@@ -63,6 +71,7 @@ function Form() {
       <Input label="Last name:" name="lastName" onChange={onChange} />
       <Input label="Date of birth:" name="birthDate" onChange={onChange} />
       <SubmitButton value="Download" onSubmit={onSubmit} />
+      {loading && <Loader />}
     </form>
   );
 }

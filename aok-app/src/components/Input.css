@@ -1,0 +1,28 @@
+.Input + .Input {
+  margin-top: 16px;
+}
+
+.Input label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.Input input {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  height: 40px;
+  font-size: 16px;
+  color: #495057;
+  background-color: #f5f3f3;
+  border: none;
+  border-radius: 4px;
+}
+
+.Input input:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(41, 149, 255, 0.5);
+}

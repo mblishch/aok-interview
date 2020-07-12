@@ -1,0 +1,84 @@
+.SubmitButton {
+  position: relative;
+  margin: 32px auto 0;
+  width: 240px;
+  z-index: 1;
+}
+
+.SubmitButton input {
+  display: block;
+  padding: 8px 16px;
+  height: 48px;
+  width: 100%;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: 0;
+  user-select: none;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 700;
+  -webkit-transform: scale3d(1,1,1);
+  transform: scale3d(1,1,1);
+  -webkit-transition: all 0.15s ease-in;
+  transition: all 0.15s ease-in;
+}
+
+.SubmitButton:hover input {
+  -webkit-transform: scale3d(1.03,1.03,1);
+  transform: scale3d(1.03,1.03,1);
+}
+
+.SubmitButton input:active {
+  -webkit-transform: scale3d(0.95,0.95,1);
+  transform: scale3d(0.95,0.95,1);
+}
+
+.SubmitButton input,
+.SubmitButton:after {
+  background: linear-gradient(-45deg, #04bcff, #2995ff, #5568fe);
+  background-size: 300%;
+  -webkit-animation: gradient 5s linear infinite;
+  animation: gradient 5s linear infinite;
+}
+
+.SubmitButton:after {
+  content: "";
+  position: absolute;
+  margin: 0 auto;
+  width: 80%;
+  height: 36px;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  z-index: -1;
+  opacity: 0.85;
+  -webkit-filter: blur(20px);
+  filter: blur(20px);
+}
+
+@-webkit-keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

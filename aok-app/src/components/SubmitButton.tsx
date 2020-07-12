@@ -1,4 +1,5 @@
 import React from 'react';
+import './SubmitButton.css';
 
 interface SubmitButtonProps {
   value: string,
@@ -7,7 +8,9 @@ interface SubmitButtonProps {
 
 function SubmitButton({value, onSubmit}: SubmitButtonProps) {
   return (
-    <input type="button" value={value} onClick={onSubmit} />
+    <div className="SubmitButton">
+      <input type="button" value={value} onClick={onSubmit} />
+    </div>
   );
 }
 

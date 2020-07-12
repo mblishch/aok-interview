@@ -1,12 +1,7 @@
+import { FullCertificate } from '@aokpass/aok-sdk';
 import config from './config';
 
-// interface Request {
-//   email: string,
-//   hash: string,
-//   standard: string,
-// }
-
-export default async function validateAttestation(certificateHash: string) {
+export default async function validateAttestation(fullCertificate: FullCertificate, certificateHash: string) {
   const { endpoint, email } = config;
   const attestationRequestResult = await fetch(`${endpoint}/request-attest/`, {
     method: "POST",
@@ -14,6 +9,7 @@ export default async function validateAttestation(certificateHash: string) {
       body: JSON.stringify({
         email,
         hash: certificateHash,
+        standard: fullCertificate.standard,
       })
   });
   return attestationRequestResult.json();
