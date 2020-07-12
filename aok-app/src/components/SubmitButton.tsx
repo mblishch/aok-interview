@@ -9,7 +9,7 @@ interface SubmitButtonProps {
 function SubmitButton({value, onSubmit}: SubmitButtonProps) {
   return (
     <div className="SubmitButton">
-      <input type="button" value={value} onClick={onSubmit} />
+      <input type="submit" value={value} onClick={onSubmit} />
     </div>
   );
 }

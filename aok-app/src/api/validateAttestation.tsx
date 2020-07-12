@@ -5,12 +5,12 @@ export default async function validateAttestation(fullCertificate: FullCertifica
   const { endpoint, email } = config;
   const attestationRequestResult = await fetch(`${endpoint}/request-attest/`, {
     method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        hash: certificateHash,
-        standard: fullCertificate.standard,
-      })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email,
+      hash: certificateHash,
+      standard: fullCertificate.standard,
+    })
   });
-  return attestationRequestResult.json();
+  return await attestationRequestResult.json();
 }

@@ -4,6 +4,7 @@ import './Form.css';
 import Input from './Input';
 import SubmitButton from './SubmitButton';
 import Loader from './Loader';
+import ErrorMessage from './ErrorMessage';
 
 import { createCertificateHash, validateAttestation, getAttestationData } from '../api';
 import { FullCertificate, AttestedCertificate } from '@aokpass/aok-sdk';
@@ -26,6 +27,7 @@ function Form() {
     createEmptyFormData()
   );
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const onChange = (name: string, value: string) => {
     setFormValue({
@@ -35,6 +37,8 @@ function Form() {
   }
 
   const onSubmit = async (event: any) => {
+    event.preventDefault();
+
     if (loading) {
       return false;
     }
@@ -51,8 +55,8 @@ function Form() {
 
     const certificateHash = await createCertificateHash(fullCertificate);
 
-    const validationResult = await validateAttestation(fullCertificate, certificateHash);
-    if (validationResult.success) {
+    const { success, err } = await validateAttestation(fullCertificate, certificateHash);
+    if (success) {
       const attestationData = await getAttestationData(certificateHash);
       const attestedCertificate: AttestedCertificate = {
         ...attestationData,
@@ -61,17 +65,19 @@ function Form() {
       setLoading(false);
       downloadObjectAsJson(attestedCertificate, `attested_certificate_${Date.now()}`);
     } else {
-      console.log('Not valid.');
+      setLoading(false);
+      setError(err || 'Failed to fetch.');
     }
   };
 
   return (
-    <form className="Form">
+    <form className="Form" onSubmit={onSubmit}>
       <Input label="First name:" name="firstName" onChange={onChange} />
       <Input label="Last name:" name="lastName" onChange={onChange} />
       <Input label="Date of birth:" name="birthDate" onChange={onChange} />
       <SubmitButton value="Download" onSubmit={onSubmit} />
       {loading && <Loader />}
+      {error && <ErrorMessage error={error} onClose={(e) => setError('')} />}
     </form>
   );
 }

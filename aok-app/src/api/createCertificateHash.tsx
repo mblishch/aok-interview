@@ -1,5 +1,5 @@
 import * as crypto from 'crypto';
-import { hashFullCertificate, FullCertificate } from '@aokpass/aok-sdk';
+import { hashFullCertificate } from '@aokpass/aok-sdk';
 
 const digest = (b): Promise<Buffer> => {
   return new Promise(r =>
